@@ -8,7 +8,6 @@ typedef struct
     char nombre[30];
     char sexo; //m|f
 } stalumno;
-
 void ejercicio1();
 void ejercicio2();
 void ejercicio3();
@@ -18,7 +17,6 @@ void ejercicio6();
 void ejercicio7();
 void ejercicio8();
 void ejercicio9();
-
 int carga(stalumno alumno[]);
 void cargaAlumno(stalumno alumno[],int i);
 void muestra(stalumno alumno[],int cantidad);
@@ -31,7 +29,6 @@ void muestraAlumnoPorSexo(stalumno alumno[],int cantidad);
 char busquedaSexo(stalumno alumno[],int cantidad);
 void ordenInsercion(stalumno alumno[],int validos);
 void insertar(stalumno alumno[],int i);
-
 int main()
 {
     int ejercicio;
@@ -108,10 +105,9 @@ int main()
     }
     while(ejercicio!=0);
     printf("\nTP6 TERMINADO\n");
-    printf("\nVersion 1.0\n");
+    printf("\nVersion 1.1\n");
     return 0;
 }
-
 int carga(stalumno alumno[])                                                                //FUNCION CARGA
 {
     int i;
@@ -197,15 +193,12 @@ void ordenSeleccion(stalumno alumno[],int cantidad)                             
         auxM=alumno[posicion].matricula;
         strcpy(auxN[0],alumno[posicion].nombre);
         auxS=alumno[posicion].sexo;
-
         alumno[posicion].matricula=alumno[i].matricula;
         strcpy(alumno[posicion].nombre,alumno[i].nombre);
         alumno[posicion].sexo=alumno[i].sexo;
-
         alumno[i].matricula=auxM;
         strcpy(alumno[i].nombre,auxN[0]);
         alumno[i].sexo=auxS;
-
         i++;
     }
 }
@@ -230,7 +223,6 @@ void muestraAlumnoPorSexo(stalumno alumno[],int cantidad)                       
     int i;
     char busqueda;
     busqueda=busquedaSexo(alumno,cantidad);                                                 //FUNCION BUSQUEDAMATRICULA
-
     for(i=0;i<cantidad;i++)
     {
         if(busqueda==alumno[i].sexo)
@@ -238,7 +230,6 @@ void muestraAlumnoPorSexo(stalumno alumno[],int cantidad)                       
             muestraAlumno(alumno,i);
         }
     }
-
 }
 char busquedaSexo(stalumno alumno[],int cantidad)                                           //FUNCION BUSQUEDAMATRICULA
 {
@@ -274,7 +265,6 @@ void insertar(stalumno alumno[],int i)                                          
     strcpy(alumno[i+1].nombre,valorN[0]);
     alumno[i+1].sexo=valorS;
 }
-
 void ejercicio1()
 {
     //Hacer una funcion que cargue un arreglo de alumnos, hasta que el usuario lo decida.
