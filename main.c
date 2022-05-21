@@ -108,7 +108,7 @@ int main()
     }
     while(ejercicio!=0);
     printf("\nTP6 TERMINADO\n");
-    printf("\nVersion 1.2\n");
+    printf("\nVersion 1.3\n");
     return 0;
 }
 int carga(stalumno alumno[])                                                                //FUNCION CARGA
@@ -280,12 +280,9 @@ void ordenInsercionN(stalumno alumno[],int cantidad)                            
 void insertarN(stalumno alumno[],int i)                                                     //FUNCION INSERTARN
 {
     int valorM=alumno[i+1].matricula;
-
     char valorN[1][30];
     strcpy(valorN[0],alumno[i+1].nombre);
-
     char valorS=alumno[i].sexo;
-
     int j=i;
     while(j>=0 && strcmp(valorN[0],alumno[j].nombre)<0)
     {
