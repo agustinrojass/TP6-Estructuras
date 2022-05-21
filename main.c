@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//FALTA 7 - 8 - 9
 typedef struct
 {
     int matricula;
@@ -27,8 +26,12 @@ void ordenSeleccion(stalumno alumno[],int cantidad);
 int posicionMenor(stalumno alumno[],int i,int cantidad);
 void muestraAlumnoPorSexo(stalumno alumno[],int cantidad);
 char busquedaSexo(stalumno alumno[],int cantidad);
-void ordenInsercion(stalumno alumno[],int validos);
-void insertar(stalumno alumno[],int i);
+void ordenInsercionM(stalumno alumno[],int validos);
+void insertarM(stalumno alumno[],int i);
+void ordenInsercionN(stalumno alumno[],int validos);
+void insertarN(stalumno alumno[],int i);
+char buscadorS(stalumno alumno[]);
+int contadorS(stalumno alumno[],int cantidad,char sexo);
 int main()
 {
     int ejercicio;
@@ -105,7 +108,7 @@ int main()
     }
     while(ejercicio!=0);
     printf("\nTP6 TERMINADO\n");
-    printf("\nVersion 1.1\n");
+    printf("\nVersion 1.2\n");
     return 0;
 }
 int carga(stalumno alumno[])                                                                //FUNCION CARGA
@@ -239,16 +242,16 @@ char busquedaSexo(stalumno alumno[],int cantidad)                               
     scanf("%c",&busqueda);
     return busqueda;
 }
-void ordenInsercion(stalumno alumno[],int cantidad)                                         //FUNCION ORDENINSERCION
+void ordenInsercionM(stalumno alumno[],int cantidad)                                        //FUNCION ORDENINSERCIONM
 {
     int i=0;
     while (i<cantidad)
     {
-        insertar(alumno,i);                                                                 //FUNCION INSERTAR
+        insertarM(alumno,i);                                                                //FUNCION INSERTARM
         i++;
     }
 }
-void insertar(stalumno alumno[],int i)                                                      //FUNCION INSERTAR
+void insertarM(stalumno alumno[],int i)                                                     //FUNCION INSERTARM
 {
     int valorM=alumno[i+1].matricula;
     char valorN[1][30];
@@ -264,6 +267,62 @@ void insertar(stalumno alumno[],int i)                                          
     alumno[i+1].matricula=valorM;
     strcpy(alumno[i+1].nombre,valorN[0]);
     alumno[i+1].sexo=valorS;
+}
+void ordenInsercionN(stalumno alumno[],int cantidad)                                        //FUNCION ORDENINSERCIONN
+{
+    int i=0;
+    while(i<cantidad-1)
+    {
+        insertarN(alumno,i);
+        i++;
+    }
+}
+void insertarN(stalumno alumno[],int i)                                                     //FUNCION INSERTARN
+{
+    int valorM=alumno[i+1].matricula;
+
+    char valorN[1][30];
+    strcpy(valorN[0],alumno[i+1].nombre);
+
+    char valorS=alumno[i].sexo;
+
+    int j=i;
+    while(j>=0 && strcmp(valorN[0],alumno[j].nombre)<0)
+    {
+        alumno[j+1].matricula=alumno[j].matricula;
+        strcpy(alumno[j+1].nombre,alumno[j].nombre);
+        alumno[j+1].sexo=alumno[j].sexo;
+        j--;
+    }
+    alumno[j+1].matricula=valorM;
+    strcpy(alumno[j+1].nombre,valorN[0]);
+    alumno[j+1].sexo=valorS;
+}
+char buscadorS(stalumno alumno[])                                                           //FUNCION BUSCADORS
+{
+    char sexo;
+    printf("Ingrese el sexo del cual desea saber la cantidad (m|f): ");
+    fflush(stdin);
+    scanf("%c",&sexo);
+    while(sexo!='m' && sexo!='f')
+    {
+        printf("Ingrese el sexo correctamente (m|f): ");
+        fflush(stdin);
+        scanf("%c",&sexo);
+    }
+    return sexo;
+}
+int contadorS(stalumno alumno[],int cantidad,char sexo)                                     //FUNCION CONTADORS
+{
+    int i,j=0;
+    for(i=0;i<cantidad;i++)
+    {
+        if(sexo==alumno[i].sexo)
+        {
+            j++;
+        }
+    }
+    return j;
 }
 void ejercicio1()
 {
@@ -324,20 +383,43 @@ void ejercicio6()
     ordenSeleccion(alumno,cantidad);                                                        //FUNCION ORDENSELECCION
     muestra(alumno,cantidad);                                                               //FUNCION MUESTRA
     cargaAlumno(alumno,cantidad);                                                           //FUNCION CARGAALUMNO
-    ordenInsercion(alumno,cantidad+1);                                                      //FUNCION ORDENINSERCION
+    ordenInsercionM(alumno,cantidad+1);                                                     //FUNCION ORDENINSERCION
     muestra(alumno,cantidad+1);                                                             //FUNCION MUESTRA
 }
 void ejercicio7()
 {
     //Hacer una función que ordene el arreglo de alumnos por medio del método de inserción.
     //El criterio de ordenación es el nombre.
+    int cantidad;
+    stalumno alumno[30];
+    cantidad=carga(alumno);                                                                 //FUNCION CARGA
+    muestra(alumno,cantidad);                                                               //FUNCION MUESTRA
+    printf("Legajos ordenados:\n");
+    ordenInsercionN(alumno,cantidad);                                                       //FUNCION ORDENINSERCIONN
+    muestra(alumno,cantidad);                                                               //FUNCION MUESTRA
 }
 void ejercicio8()
 {
     //Hacer una funcion que cuente y retorne la cantidad de estudiantes de un genero determinado (se envia por parametro) que tiene un arreglo de alumnos.
+    int cantidad,cantidadS;
+    char sexo;
+    stalumno alumno[30];
+    cantidad=carga(alumno);                                                                 //FUNCION CARGA
+    muestra(alumno,cantidad);                                                               //FUNCION MUESTRA
+    sexo=buscadorS(alumno);                                                                 //FUNCION BUSCADORS
+    cantidadS=contadorS(alumno,cantidad,sexo);                                              //FUNCION CONTADORS
+    if(sexo=='m')
+    {
+        printf("Hay %i personas del sexo masculino.\n\n",cantidadS);
+    }
+    else
+    {
+        printf("Hay %i personas del sexo femenino.\n\n",cantidadS);
+    }
 }
 void ejercicio9()
 {
     //Hacer una funcion principal que pruebe el funcionamiento de todos los incisos anteriores, con un menu de opciones para poder ejecutar todas las funciones requeridas.
     //Tengan presente la correcta declaracion y el ambito de variables.
+    //ES EL MAIN.
 }
